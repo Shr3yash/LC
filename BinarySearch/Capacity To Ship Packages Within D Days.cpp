@@ -1,6 +1,6 @@
-Time complexity: O(n * logSIZE), where SIZE is the size of the search space (sum of weights - max weight).
+/*Time complexity: O(n * logSIZE), where SIZE is the size of the search space (sum of weights - max weight).
 Space complexity: O(1).
-
+*/
 public int shipWithinDays(int[] weights, int d) {
     int lo = getMax(weights);
     int hi = getSum(weights);
