@@ -1,5 +1,5 @@
 //TLE
-
+//O(n2) & O(1)
 class Solution 
 {
 public:
