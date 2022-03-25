@@ -29,3 +29,34 @@ public:
         
     }
 };
+
+class Solution {
+    //linked list approach we will traverse the array with two ptrs slow is
+    //half the speed of fast. therefore when they two meet fast has travelled sx and 
+//     slow x. now make fast to 0 which means they have travelled equal, therefore after 
+//         that when we traverse them with one speed they are bound to meet at the node where 
+//         the joint is present in the linked list or the node which is duplicate.
+        
+//         linked list is made by the elements of array in space with their given sequence. 
+//            ____
+//           /	   \
+// nums[0]--<      |
+//           \____/
+public:
+    int findDuplicate(vector<int>& nums) {
+        int fast=nums[0]; 
+        int slow=nums[0];
+        do{
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+        }while(slow!=fast);
+        
+        fast=nums[0];
+        while(fast!=slow){
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return fast;
+        
+    }
+};
