@@ -11,20 +11,38 @@ public:
         int mid=nums[0];
         int low=nums[0];
         int high=nums[n];
-        
-        while (mid <= hi){
-            if(nums[i]==0){
-                swap(nums[mid], nums[low]);
-                mid++;
-                low++;
+        //NO IF ELSE HERE USE SWITCH CASE
+        while (mid <= hi) { 
+            switch (nums[mid]) { 
+
+            // If the element is 0 
+            case 0: 
+                swap(nums[lo++], nums[mid++]); 
+                break; 
+
+            // If the element is 1 . 
+            case 1: 
+                mid++; 
+                break; 
+
+            // If the element is 2 
+            case 2: 
+                swap(nums[mid], nums[hi--]); 
+                break; 
             }
-            else if(nums[i]==1){
-                mid++;
-            }
-            else{
-                high--;
-                swap(nums[high], nums[mid]);
-            }
+//         while (mid <= high){
+//             if(nums[i]==0){
+//                 swap(nums[mid], nums[low]);
+//                 mid++;
+//                 low++;
+//             }
+//             else if(nums[i]==1){
+//                 mid++;
+//             }
+//             else{
+//                 high--;
+//                 swap(nums[high], nums[mid]);
+//             }
         
             
         }
