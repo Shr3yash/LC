@@ -12,7 +12,7 @@ public:
         int low=nums[0];
         int high=nums[n];
         
-        for(int i=0; i<=n; i++){
+        while (mid <= hi){
             if(nums[i]==0){
                 swap(nums[mid], nums[low]);
                 mid++;
