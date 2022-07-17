@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int solve(int a, int b, vector<vector<int>>& grid){
+        if(grid[a][b]==1 && a>=0 && a<grid.size() && b>=0 && b<grid[0].size()){
+            grid[a][b]=0;
+            return 1 + solve(a+1,b,grid) + solve(a-1,b,grid) + solve(a,b+1,grid) + solve(a,b-1,grid);
+        }
+        return 0;
+    }
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int maxArea=-1e9;
+        for(int a=0; a<grid.size(); ++a){
+            for(int b=0; b<grid[0].size(); ++b){
+                if(grid[a][b]==1){
+                    maxArea=max(maxArea, solve(a,b,grid));
+            }
+        }
+        return maxArea;
+    }
+};
