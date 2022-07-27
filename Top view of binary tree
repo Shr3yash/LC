@@ -1,0 +1,30 @@
+class Solution {
+public :
+	
+	vector<int> topView(Node* root){
+		vector<int> ans;
+		if(!root) return ans;
+		
+		queue<pair<Node*, int>> q;
+		map<int, int> maplevel;
+		
+		q.push({root, 0});
+		
+		while(!q.empty()){
+			Node* node=q.front().first;
+			int col=q.front().second;
+			q.pop();
+			
+			if(maplevel.find(col)==maplevel.end()) maplevel[col]=node->val;
+			if(node->left != NULL) Q.push({node->left, level-1});
+			if(node->right != NULL) Q.push({node->right, level+1});
+		}
+		
+		for(auto x:mp){
+			ans.push_back(x.second);
+		}
+		return ans;
+			
+		}
+	}
+};
