@@ -1,0 +1,8 @@
+if(root==NULL || root==p || root==q) return root;
+
+TreeNode* left = solve( root->left, p, q);
+TreeNode* right = solve(root->right, p , q);
+
+if(left == NULL) return right;
+else if( right==NULL) return left;
+else return root; //when both left and right are found
