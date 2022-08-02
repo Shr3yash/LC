@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        vector<int> res;
+        return res;
+    }
+
+    vector<int> nice(TreeNode* root, TreeNode* target, int k) {
+        vector<pair<TreeNode*, int>> res;
+        if(!root->left&&!root->right) return res;
+        queue<pair<TreeNode*, int>> q;
+        q.push({root, 0});
+        
+        while(!q.empty()){
+
+            int sz = q.size();
+            
+            for(int i=0; i<sz; ++i){
+                
+                TreeNode* buff = q.front().first;
+                int level = q.front().second;
+                if(buff==target) {
+                    //auto ptr = buff;
+                    vector<TreeNode*, int> :: iterator ptr;
+                    *ptr = q.front();
+                    
+                }
+                q.pop();
+                
+                if(buff->left) q.push({buff->left, -(++level)});
+                if(buff->right) q.push({buff->right, ++level});
+                
+
+                res.push_back({buff, level});
+            }
+        }
+        //then in the array find your target node and traverse across and get the equidistant values which you need.
+        return res;
+    }
+};
