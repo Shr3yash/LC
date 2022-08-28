@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& mat, int i, int j){
+        int x=i, y=j;
+        vector<int> ans;
+        while(i<mat.size()&&j<mat[0].size()){
+            ans.push_back(mat[i++][j++]);
+        }
+        sort(ans.begin(), ans.end());
+        int k=0;
+        while(k<ans.size()){
+            mat[x++][y++]=ans[k++];
+        }
+        //return mat;
+    }
+    vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
+        int i=0, j=0;
+        while(j<mat[0].size()){
+            dfs(mat, 0, j++);
+        }
+        while(i<mat.size()){
+            dfs(mat, i++, 0);
+        }
+        return mat;
+    }
+};
