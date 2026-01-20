@@ -1,16 +1,24 @@
 class Solution {
-    public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) return false;
-        HashMap <Character, Integer> HSQ = new HashMap<>();
-        HashMap <Character, Integer> HSW = new HashMap<>();
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // Map<String, List<String>> ans = new HashMap<>();
+        // for(String s:strs){
+        //     char[] cur = s.toCharArray();
+        //     Arrays.sort(cur);
+        //     String key = new String(cur);
+        //     ans.computeIfAbsent(key, k->new ArrayList<>()).add(s);
+        // }
+        // return new ArrayList<>(ans.values());
 
-        for(int i = 0; i < s.length(); ++i){
-            HSQ.put(s.charAt(i), HSQ.getOrDefault(s.charAt(i), 0)+1);
-            HSW.put(t.charAt(i), HSW.getOrDefault(t.charAt(i), 0)+1);
+        Map<String, List<String>> hm = new HashMap<>();
+        for(String s:strs){
+            int[] box = new int[26];
+            for(char c:s.toCharArray()){
+                box[c-'a']++;
+            }
+            String key = Arrays.toString(box);
+            hm.putIfAbsent(key, new ArrayList<>());
+            hm.get(key).add(s);
         }
-        for(char num : HSQ.keySet()){
-            if(!HSQ.get(num).equals(HSW.get(num))) return false;
-        }
-        return true;
+        return new ArrayList<>(hm.values());
     }
 }
