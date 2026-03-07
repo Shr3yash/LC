@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        // 1 to max
+        int maxi = *max_element(piles.begin(), piles.end());
+        int left = 1;
+        int right = maxi;
+        while(left<right){
+            //compute time
+            int mid = left - (left-right)/2;
+            int sum = 0;
+            for(const auto& itr: piles){
+                sum += ceil((double)itr/(double)mid);
+                if(sum>h) break;
+            }
+            if(sum>h){
+                left = mid+1;
+            }
+            else right = mid;
+        }
+
+        return left;
+    }
+};
