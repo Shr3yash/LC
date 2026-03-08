@@ -1,0 +1,27 @@
+class Solution {
+private:
+    void recursion(int opened, int closed, int n, vector<string>& soln, string cstring){
+        if(opened == n && closed == n){
+            soln.push_back(cstring);
+        }
+        //append open if available
+        if(opened<n){
+            recursion(opened+1, closed, n,  soln, cstring+'(');
+        }
+
+        //append close if already opened
+        if(opened-closed > 0){
+            recursion(opened, closed+1, n, soln, cstring+')');
+        }
+
+
+    }
+public:
+    vector<string> generateParenthesis(int n) {
+
+        vector<string> soln;
+        string cs = "";
+        recursion(0,0, n, soln, cs);
+        return soln;
+    }
+};
