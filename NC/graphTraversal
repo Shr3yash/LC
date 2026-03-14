@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+  private:
+    bool dfs(int node, int parent, vector<vector<int>>& edges, vector<int>& vis){
+        vis[node] = 1; //mark visited
+        //dfs for every corressponding vertex of the current node
+        for(auto adjacentNode:edges[node]){
+            if(!vis[adjacentNode]){ 
+                //dfs if not visited else check if adjacent node is parent
+                if(dfs(adjacentNode, node, edges, vis)) return true;
+            }
+            else if(adjacentNode!=parent) return true; 
+            //if adj node aint parent, how is it already visited
+        }
+        return false;
+        
+    }
+    
+    bool bfs(int node, vector<vector<int>>& adj, vector<int>& vis){
+        queue<pair<int, int>> q;
+        q.push({node, -1});
+        vis[node] = 1;
+        while(!q.empty()){
+            int currentNode = q.front().first;
+            int parent = q.front().second;
+            q.pop();
+            
+            for(auto itr:adj[currentNode]){
+                if(!vis[itr]){
+                    q.push({itr, currentNode});
+                    vis[itr] = 1;
+                }
+                else if(itr!=parent) return true;
+            }
+        }
+        return false;
+    }
+  public:
+    bool isCycle(int V, vector<vector<int>>& edges) {
+        // Code here
+        vector<int> vis (V, 0);
+        bool ans = false;
+        vector<vector<int>> adj(V);
+        
+        //build adj matrix
+        
+        for(auto i:edges){
+            int u = i[0];
+            int v = i[1];
+            
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        
+        for(int i = 0; i<V; ++i){
+            if(!vis[i]){
+                //if(dfs(i, -1, adj, vis)) return true;
+                if(bfs(i, adj, vis)) return true;
+
+            }
+        }
+        return ans;
+        
+    }
+};
