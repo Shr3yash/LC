@@ -1,0 +1,63 @@
+class Solution {
+private:
+    void dfs(int x, int y, vector<vector<char>>& board, vector<vector<int>>& vis){
+        int n = board.size();
+        int m = board[0].size();
+
+        vis[x][y] = 1;
+
+        int dx[] = {-1, 1, 0, 0};
+        int dy[] = {0, 0, -1, 1};
+
+        for(int k = 0; k < 4; ++k){
+            int nx = x + dx[k];
+            int ny = y + dy[k];
+            if(nx >= 0 && nx < n && ny >= 0 && ny < m &&
+               board[nx][ny] == 'O' && !vis[nx][ny]){
+                dfs(nx, ny, board, vis);
+            }
+        }
+    }
+public:
+    void solve(vector<vector<char>>& board) {
+        int m = board[0].size();
+        int n = board.size();
+        vector<vector<int>> vis (n, vector<int>(m, 0));
+
+        //traverse boundaries
+        for(int i = 0; i<m;  i++){
+            //run a dfs on connected group at the edges
+            if(board[0][i] == 'O'){
+                vis[0][i] = 1;
+                dfs(0, i, board, vis);
+            }
+            if(board[n-1][i] == 'O'){
+                vis[n-1][i] = 1;
+                dfs(n-1, i, board, vis);
+
+            }
+        }
+        for(int i = 0; i<n;  i++){
+            //run a dfs on connected group at the edges
+            if(board[i][0] == 'O'){
+                vis[i][0] = 1;
+                dfs(i, 0, board, vis);
+
+            }
+            if(board[i][m-1] == 'O'){
+                vis[i][m-1] = 1;
+                dfs(i, m-1, board, vis);
+
+            }
+        }
+
+        for(int i = 0; i<n; ++i){
+            for(int j = 0; j<m; ++j){
+                if(board[i][j] == 'O' && !vis[i][j]){
+                    board[i][j] = 'X';
+                }
+            }
+        }
+
+    }
+};
