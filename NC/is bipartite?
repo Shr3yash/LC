@@ -1,0 +1,52 @@
+class Solution {
+private:
+    bool dfs(int cur, vector<vector<int>>& graph, vector<int>& gray){
+        if(cur == 0){
+            gray[cur] = 1;
+        }
+        for(auto neighbor: graph[cur]){
+            if(gray[neighbor] == 0){
+                gray[neighbor] = -gray[cur];
+                if (!dfs(neighbor, graph, gray)) return false;
+            }
+            else if(gray[neighbor] == gray[cur]){
+                return false;
+            }
+        }
+        return true;
+    }
+    bool bfs(vector<vector<int>>& graph, vector<int>& gray, int start){
+        queue<int> q;
+        q.push(start);
+        gray[start] = 1;
+
+        while(!q.empty()){
+            int curVertex = q.front();
+            q.pop();
+
+            for(auto neighbor : graph[curVertex]){
+                if(!gray[neighbor]){
+                    gray[neighbor] = -gray[curVertex];
+                    q.push(neighbor);
+                }
+                else{
+                    if(gray[neighbor] == gray[curVertex]) return false;
+                }
+            }
+        }
+        return true;
+    }
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        vector<int> gray (graph.size(), 0); //1&-1
+        for(int i = 0; i<graph.size(); ++i){
+            if(gray[i] == 0){
+                if(!bfs(graph, gray, i)) return false;
+                gray[i]=-1;
+                if(!dfs(i, graph, gray)) return false;
+            }
+            else continue;
+        }
+        return true;
+    }
+};
