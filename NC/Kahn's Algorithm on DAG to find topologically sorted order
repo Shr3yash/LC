@@ -1,0 +1,41 @@
+class Solution {
+  public:
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
+        vector<vector<int>> adjMat(V);
+        for(auto& itr: edges){
+            int u = itr[0];
+            int v = itr[1];
+            
+            adjMat[u].push_back(v);
+        }
+        vector<int> indegree(V, 0);
+        for(auto itr:edges){
+            indegree[itr[1]]++;
+        }
+        queue<int> q;
+        vector<int> ans;
+        //sort(indegree.begin(), indegree.end());
+        int count = 0;
+        for(const auto& itr: indegree){
+            if(itr == 0){
+                q.push(count);
+            }
+            count++;
+        }
+        //it will always have someone with indegree 0 because its a dag you goldfish memory
+        if(q.empty()){
+            q.push(0);
+        }
+        while(!q.empty()){
+            int cur = q.front();
+            q.pop();
+            ans.push_back(cur);
+            
+            for(auto& neighbor : adjMat[cur]){
+                indegree[neighbor]--;
+                if(!indegree[neighbor]) q.push(neighbor);
+            }
+        }
+        return ans;
+    }
+};
