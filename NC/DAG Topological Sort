@@ -1,0 +1,36 @@
+class Solution {
+  private:
+   void dfs(int cur, vector<int>& vis, stack<int>& st, vector<vector<int>>& adj){
+       
+        vis[cur] = 1;
+        for(auto itr:adj[cur]){
+            if(!vis[itr]) dfs(itr, vis, st, adj);
+        }
+        st.push(cur);
+   }
+  public:
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
+        // code here
+        vector<vector<int>> adjMat(V);
+        for(auto itr:edges){
+            int u = itr[0];
+            int v = itr[1];
+            
+            adjMat[u].push_back(v);
+        }
+        stack<int> st;
+        vector<int> ans;
+        vector<int> vis(V, 0);
+        
+        for(int i = 0; i<V; ++i){
+            if(!vis[i]){
+                dfs(i, vis, st, adjMat);
+            }
+        }
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        return ans;
+    }
+};
