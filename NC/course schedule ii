@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adjMat(numCourses);
+        vector<int> ans;
+        vector<int> indegree(numCourses, 0);
+        queue<int> q;
+
+        for(auto& itr: prerequisites){
+            adjMat[itr[1]].push_back(itr[0]);
+            indegree[itr[0]]++;
+        }
+        for(int i = 0; i<numCourses; ++i){
+            if(indegree[i] == 0){
+                q.push(i);
+            }
+        }
+
+        while(!q.empty()){
+            int cur = q.front();
+            q.pop();
+            ans.push_back(cur);
+
+            for(auto itr:adjMat[cur]){
+                indegree[itr]--;
+                if(indegree[itr]==0) q.push(itr);
+            }
+        }
+        if(ans.size() == numCourses) return ans;
+        return {};
+    }
+};
