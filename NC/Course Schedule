@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        //topo sort kahns
+        vector<vector<int>> adjMat(numCourses);
+        vector<int> indegree(numCourses, 0);
+        queue<int> q;
+
+        for(auto& itr:prerequisites){
+            int u = itr[0];
+            int v = itr[1];
+            adjMat[u].push_back(v);
+            indegree[itr[1]]++;
+        }
+        int count = 0; //Non zero indegs eventually.
+        
+        for(auto i = 0; i< indegree.size(); ++i){
+            if (indegree[i] == 0) q.push(i);
+        }
+        
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            count++;
+
+            for(auto& itr : adjMat[node]){
+                indegree[itr]--;
+                if(indegree[itr]==0) q.push(itr);
+            }
+        }
+        return numCourses == count;
+    }
+};
