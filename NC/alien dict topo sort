@@ -1,0 +1,75 @@
+class Solution {
+public:
+    string alienOrder(vector<string>& words) {
+        vector<pair<int, int>> dag;
+        int n = words.size();
+
+        string ans = "";
+
+        //track which chars actually exist
+        vector<int> present(26, 0);
+        for (auto &w : words) {
+            for (char c : w) present[c - 'a'] = 1;
+        }
+
+        for (int i = 0; i < n - 1; ++i) {
+            string s1 = words[i], s2 = words[i + 1];
+            int start = 0;
+            int len = min(s1.size(), s2.size());
+
+            while (start < len && s1[start] == s2[start]) {
+                start++;
+            }
+
+            // invalid prefix case
+            if (start == len && s1.size() > s2.size()) return "";
+            if (start < len) {
+                int x = s1[start] - 'a', y = s2[start] - 'a';
+                //avoid duplicate edges
+                bool exists = false;
+                for (auto &p : dag) {
+                    if (p.first == x && p.second == y) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) dag.push_back({x, y});
+            }
+        }
+
+        //now find topo sort
+        vector<int> indegree(26, 0);
+        for (auto itr : dag) {
+            indegree[itr.second]++;
+        }
+
+        int count = 0;
+        int total = 0;
+        queue<int> q;
+
+        for (int i = 0; i < 26; ++i) {
+            if (present[i]) {
+                total++;
+                if (indegree[i] == 0) q.push(i);
+            }
+        }
+
+        while (!q.empty()) {
+            int cur = q.front();
+            q.pop();
+            ans += (char)(cur + 'a');
+            count++;
+
+            for (auto &neighbors : dag) {
+                if (neighbors.first == cur) {
+                    indegree[neighbors.second]--;
+                    if (indegree[neighbors.second] == 0) {
+                        q.push(neighbors.second);
+                    }
+                }
+            }
+        }
+
+        return ans.size() == total ? ans : "";
+    }
+};
