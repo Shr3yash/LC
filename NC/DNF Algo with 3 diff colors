@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        // vector<int> sol;
+        // sol.reserve(nums.size());
+        // for(int i = 0; i<nums.size(); ++i){
+        //     if(nums[i] == 0) sol.push_back(0);
+        // }
+        // for(int i = 0; i<nums.size(); ++i){
+        //     if(nums[i] == 1) sol.push_back(1);
+        // }
+        // for(int i = 0; i<nums.size(); ++i){
+        //     if(nums[i] == 2) sol.push_back(2);
+        // }
+        // nums = sol;
+        int n = nums.size();
+        int left = 0, mid = 0, right = n-1;
+        
+        while(mid<=right){
+            if(nums[mid] == 0){
+                swap(nums[mid], nums[left]);
+                mid++;
+                left++;
+            }
+            else if(nums[mid] == 1){
+                mid++;
+            }else{
+                swap(nums[mid], nums[right]);
+                right--;
+            }
+        }
+    }
+};
