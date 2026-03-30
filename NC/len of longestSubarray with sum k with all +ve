@@ -1,0 +1,19 @@
+class Solution{
+public:
+    int longestSubarray(vector<int> &nums, int k){
+        int ans = 0;
+        unordered_map<int, int> preSumMp;
+        //prefix sum, index
+        //preSumMp.insert({0, 0});
+        int sum = 0;
+        for(int i = 0; i<nums.size(); ++i){
+            sum+=nums[i];
+            if(preSumMp.find(sum-k)!=preSumMp.end()){
+                int len = i - preSumMp[sum];
+                ans = max(ans, len);
+            }
+            preSumMp[sum] = i;
+        }
+        return ans;
+    }
+};
